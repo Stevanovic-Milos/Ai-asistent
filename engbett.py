@@ -30,7 +30,7 @@ import qrcode
 import datetime
 
 recognizer = sr.Recognizer()
-openai.api_key = "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"
+openai.api_key = ""
 
 def get_voice_command(recognizer, language='en-US', retries=3):
     for attempt in range(retries):
@@ -91,8 +91,8 @@ from email.mime.text import MIMEText
 def send_email(to_address, subject, body):
     try:
         # Set your email credentials
-        email_address = "pnalog378@gmail.com"  # Replace with your email address
-        password = "ckce muay euhf btyl"  # Replace with your email password
+        email_address = ''  # Replace with your email address
+        password = ""  # Replace with your email password
 
         # Create the email message
         message = MIMEMultipart()
@@ -119,8 +119,8 @@ def send_email(to_address, subject, body):
 
 def read_emails():
     # Your email credentials
-    email_address = "pnalog378@gmail.com"
-    app_password = "ckce muay euhf btyl"  # Replace with your generated app password
+    email_address = ""
+    app_password = ""  # Replace with your generated app password
 
     try:
         with imaplib.IMAP4_SSL("imap.gmail.com") as mail:
