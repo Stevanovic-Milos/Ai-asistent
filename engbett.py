@@ -91,10 +91,9 @@ from email.mime.text import MIMEText
 def send_email(to_address, subject, body):
     try:
         # Set your email credentials
-        email_address = ''  # Replace with your email address
-        password = ""  # Replace with your email password
+        email_address = ''  
+        password = '' 
 
-        # Create the email message
         message = MIMEMultipart()
         message["From"] = email_address
         message["To"] = to_address
@@ -108,19 +107,19 @@ def send_email(to_address, subject, body):
             server.sendmail(email_address, to_address, message.as_string())
 
         print("Email sent successfully.")
-        return True  # Indicate success
+        return True  
 
     except smtplib.SMTPException as e:
         print(f"Failed to send email. Error: {e}")
-        return False  # Indicate failure
+        return False  
 
 
 
 
 def read_emails():
-    # Your email credentials
+
     email_address = ""
-    app_password = ""  # Replace with your generated app password
+    app_password = ""
 
     try:
         with imaplib.IMAP4_SSL("imap.gmail.com") as mail:
@@ -176,7 +175,7 @@ def search_wikipedia(query):
         result = wikipedia.summary(query, sentences=2)
         return result
     except wikipedia.DisambiguationError as e:
-        options = e.options[:5]  # Limit the number of options to display
+        options = e.options[:5]  
         options_str = ", ".join(options)
         return f"There are multiple results for {query}. Please be more specific. Options: {options_str}."
     except wikipedia.PageError as e:
@@ -212,25 +211,20 @@ def send_email_command(command):
 
 
 def run_kosovo():
-    text = "Kosovo je srce Srbije, srce Srbije! Kosovo već dugo pokušavaju da nam otmu, ali im ga nećemo dati. Kosovo i Metohija je autonomna pokrajina u sastavu Republike Srbije, i na osnovu Rezolucije Saveta bezbednosti Ujedinjenih nacija 1244 od 10. juna 1999. godine, nalazi se pod privremenom civilnom i vojnom upravom Ujedinjenih nacija. Država Srbija, uprkos tome što su privremene institucije samouprave u Prištini jednostrano, protivno osnovnim principima međunarodnog prava, proglasile nezavisnost 17. februara 2008. godine, vodi mirnu, diplomatsku i pravnu borbu za očuvanje Kosova i Metohije u svom sastavu."
+    text = "Kosovo i Metohija je autonomna pokrajina u sastavu Republike Srbije, i na osnovu Rezolucije Saveta bezbednosti Ujedinjenih nacija 1244 od 10. juna 1999. godine, nalazi se pod privremenom civilnom i vojnom upravom Ujedinjenih nacija. Država Srbija, uprkos tome što su privremene institucije samouprave u Prištini jednostrano, protivno osnovnim principima međunarodnog prava, proglasile nezavisnost 17. februara 2008. godine, vodi mirnu, diplomatsku i pravnu borbu za očuvanje Kosova i Metohije u svom sastavu."
 
-    # Create a thread for speak_srb function
     speak_thread = threading.Thread(target=speak_srb, args=(text,))
 
-    # Create a thread for opening the web link
     web_thread = threading.Thread(target=webbrowser.open_new_tab, args=("https://youtu.be/50t-8B0v9CI",))
 
-    # Start both threads
     speak_thread.start()
     web_thread.start()
 
-    # Wait for both threads to finish
     speak_thread.join()
     web_thread.join()
 
 def run_ip():
     try:
-        # Use an external service to get the public IP address
         response = requests.get("https://api64.ipify.org?format=json")
         public_ip = response.json()["ip"]
         return public_ip
@@ -245,7 +239,7 @@ def chat_with_gpt(prompt):
     prompt_with_history = f"{conversation_history}\nUser: {prompt}"
 
     response = openai.Completion.create(
-        engine="text-davinci-003",  # Use the correct engine name
+        engine="text-davinci-003",  
         prompt=prompt_with_history,
         max_tokens=150,
         n=1,
@@ -253,7 +247,6 @@ def chat_with_gpt(prompt):
 )
 
 
-    # Extract the model's reply
     model_reply = response.choices[0].text.strip()
 
     # Update the conversation history
@@ -316,7 +309,7 @@ def InternetSpeed():
     print("Wait a few seconds, checking your internet speed")  # Replace this with your speech function
     st = speedtest.Speedtest()
     dl = st.download()
-    dl = dl / (1000000)  # converting bytes to megabytes
+    dl = dl / (1000000)  
     up = st.upload()
     up = up / (1000000)
     print(dl, up)
@@ -394,10 +387,8 @@ def qrCodeGenerator():
     qr.add_data(input_text_link)
     qr.make(fit=True)
 
-    # Create an image from the QR code
     img = qr.make_image(fill_color="black", back_color="white")
 
-    # Save the QR code image
     qr_file_name = f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}_QR.png"
     img.save(qr_file_name)
 
@@ -530,7 +521,7 @@ def perform_action(command):
         InternetSpeed()
     elif 'play' in command:
         speak("Boss, can you please say the name of the song?")
-        song = get_voice_command(recognizer, language='en-US')  # Replace this with your voice recognition function
+        song = get_voice_command(recognizer, language='en-US')  
         if "play" in song:
             song = song.replace("play", "")
         speak(f'playing {song}')
@@ -538,7 +529,7 @@ def perform_action(command):
         speak('playing')
     elif "download" in command:
         speak("Boss, please enter the YouTube video link you want to download.")
-        link = input("Enter the YouTube video link: ")  # Replace this with your voice recognition function
+        link = input("Enter the YouTube video link: ")  
         yt = YouTube(link)
         yt.streams.get_highest_resolution().download()
         speak(f"Boss, downloaded {yt.title} from the link you provided into the main folder.")
@@ -566,7 +557,7 @@ def perform_action(command):
         speak('opening Netflix videos')
         webbrowser.open('https://www.netflix.com/')
 
-#otvaranje aplikacija#######################################################################################
+            #Opening Apps#
     elif ('open calculator'in command) :
         speak('Opening calculator')
         os.startfile('C:\\Windows\\System32\\calc.exe')
@@ -585,7 +576,8 @@ def perform_action(command):
     elif ('open media player'in command) :
         speak('Opening VLC media player')
         os.startfile("C:\Program Files\VideoLAN\VLC\vlc.exe")
-        #closing all#####################################################################################################
+
+                #Closing Apps#
     elif ('kill calculator'in command) :
         speak("okay boss, closeing caliculator")
         os.system("taskkill /f /im calc.exe")
@@ -606,7 +598,6 @@ def perform_action(command):
         os.system("taskkill /f /im vlc.exe")
     else:
         speak("I'm sorry, I don't understand that command.")
-
 
 
 
